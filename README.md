@@ -1,3 +1,8 @@
+## Cara install
+1. php versi 8.1 -> composer install
+2. npm install
+3. npm run dev
+
 <p align="center"></p>
 
 <p align="center">
