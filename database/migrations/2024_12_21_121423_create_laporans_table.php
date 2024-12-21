@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('laporans', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', ['Antri', 'Dikerjakan', 'Outsource', 'Selesai', 'Tidak terselesaikan'])->default('Antri');
+            $table->enum('status', ['Antri', 'Dikerjakan', 'Selesai', 'Tidak terselesaikan'])->default('Antri');
+            $table->foreignId('created_by')->references('id')->on('users');
             $table->timestamp('created_at')->useCurrent();
             $table->foreignId('updated_by')->references('id')->on('users');
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
             $table->text('deskripsi')->nullable();
-            $table->text('image_path');
         });
     }
 
