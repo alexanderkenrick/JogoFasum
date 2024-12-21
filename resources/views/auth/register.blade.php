@@ -106,6 +106,25 @@
                                     </span>
                     @enderror
                 </div>
+
+                <div class="mb-3">
+                    <label for="kota" class="form-label">Kota Domisili</label>
+                    <input type="text"
+                           class="form-control @error('kota') is-invalid @enderror"
+                           id="kota"
+                           name="kota"
+                           placeholder="Masukkan Kota Domisili"
+                           value="{{ old('kota') }}"
+                           required
+                           autocomplete="kota"
+                    />
+                    @error('kota')
+                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                    @enderror
+                </div>
+
                 <div class="mb-3 form-password-toggle">
                     <label class="form-label" for="password">Password</label>
                     <div class="input-group input-group-merge">
