@@ -21,4 +21,6 @@
         </div>
     </div>
 </div>
+<script src="{{asset('assets/vendor/js/bootstrap.js')}}"></script>
 @endsection
+
