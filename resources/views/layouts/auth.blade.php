@@ -47,6 +47,7 @@
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="{{asset('assets/vendor/css/pages/page-auth.css')}}"/>
+
     <!-- Helpers -->
     <script src="{{asset('assets/vendor/js/helpers.js')}}"></script>
 

@@ -46,6 +46,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
+    }
+
     public function dinas() : BelongsTo
     {
         return $this->belongsTo(Dinas::class, 'dinas_id', 'id');

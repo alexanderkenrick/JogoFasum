@@ -20,3 +20,8 @@ Route::middleware(['auth'])->group(function (){
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
 
+Route::prefix('pimpinan')->middleware(['auth', 'role:pimpinan'])->group(function (){
+    Route::get('/buat-user', [App\Http\Controllers\PimpinanController::class, 'showCreateUser'])->name('pimpinan.show-create-user');
+    Route::post('/buat-user', [App\Http\Controllers\PimpinanController::class, 'createUser'])->name('pimpinan.create-user');
+});
+
