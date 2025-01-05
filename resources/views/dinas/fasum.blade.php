@@ -6,7 +6,14 @@ Fasum
 @section('content')
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Fasum /</span> Dashboard</h4>
     <div class="card">
-        <h5 class="card-header">Tabel Akun</h5>
+        <div class="d-flex align-items-center justify-content-between">
+            <h5 class="card-header">Tabel Akun</h5>
+            <button type="button" class="btn btn-primary mx-5" onclick="window.location.href='{{ route('dinas.create-fasum') }}'">
+                <span class="tf-icons bx bx-plus"></span>&nbsp; Tambah Fasum
+            </button>
+        </div>
+
+
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
