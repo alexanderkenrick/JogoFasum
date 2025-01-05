@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['warga', 'admin', 'pimpinan'])->default('warga');
+            $table->enum('role', ['warga', 'dinas'])->default('warga');
             $table->string('kota')->index();
             $table->foreignId('dinas_id')->nullable()->references('id')->on('dinas');
             $table->rememberToken();

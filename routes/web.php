@@ -18,10 +18,18 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function (){
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/kategori', [\App\Http\Controllers\KategoriController::class, 'index'])->name('kategori.index');
+    Route::post('/kategori', [\App\Http\Controllers\KategoriController::class, 'store'])->name('kategori.store');
 });
 
-Route::prefix('pimpinan')->middleware(['auth', 'role:pimpinan'])->group(function (){
-    Route::get('/buat-user', [App\Http\Controllers\PimpinanController::class, 'showCreateUser'])->name('pimpinan.show-create-user');
-    Route::post('/buat-user', [App\Http\Controllers\PimpinanController::class, 'createUser'])->name('pimpinan.create-user');
+Route::prefix('dinas')->middleware(['auth', 'role:dinas'])->group(function (){
+    Route::get('/buat-user', [App\Http\Controllers\DinasController::class, 'showCreateUser'])->name('dinas.show-create-user');
+    Route::post('/buat-user', [App\Http\Controllers\DinasController::class, 'createUser'])->name('dinas.create-user');
+
+    Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('dinas.show-admin');
+
+    Route::get('/fasum', [App\Http\Controllers\FasumController::class, 'indexDinas'])->name('dinas.index-fasum');
+    Route::get('/fasum/create', [App\Http\Controllers\FasumController::class, 'createDinas'])->name('dinas.create-fasum');
+    Route::post('/fasum/store', [App\Http\Controllers\FasumController::class, 'storeDinas'])->name('dinas.store-fasum');
 });
 

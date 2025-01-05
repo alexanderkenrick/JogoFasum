@@ -186,6 +186,72 @@
                 </li>
 
                 <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Pimpinan</span>
+                </li>
+
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                        <div data-i18n="Account Settings">Akun Admin</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{route('dinas.show-admin')}}" class="menu-link">
+                                <div data-i18n="Account">Daftar Akun Admin</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{route('dinas.create-user')}}" class="menu-link">
+                                <div data-i18n="Notifications">Pendaftaran Akun Admin</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Kategori</span>
+                </li>
+
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                        <div data-i18n="Account Settings">Kategori</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{route('kategori.index')}}" class="menu-link">
+                                <div data-i18n="Account">List Kategori</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Fasum</span>
+                </li>
+
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                        <div data-i18n="Account Settings">Fasum</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{route('dinas.index-fasum')}}" class="menu-link">
+                                <div data-i18n="Account">List Fasum</div>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{route('dinas.create-fasum')}}" class="menu-link">
+                                <div data-i18n="Account">Buat Fasum</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Pages</span>
                 </li>
                 <li class="menu-item">

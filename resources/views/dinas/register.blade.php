@@ -8,7 +8,7 @@
 
 @section('content')
 
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Pimpinan /</span> Buat Akun Baru</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Dinas /</span> Buat Akun Baru</h4>
     <div class="card">
         <div class="card-header">
             <h5 class="fw-bold">Buat Akun Baru</h5>
@@ -20,7 +20,7 @@
             @endif
         </div>
         <div class="card-body">
-            <form method="post" action="{{route('pimpinan.create-user')}}">
+            <form method="post" action="{{route('dinas.create-user')}}">
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Nama Lengkap</label>

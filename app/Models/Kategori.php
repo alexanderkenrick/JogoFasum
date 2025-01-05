@@ -14,6 +14,7 @@ class Kategori extends Model
     protected $table = 'kategoris';
     protected $fillable = ['nama'];
 
+    public $hidden = ['created_at'];
     public function fasum() : BelongsToMany
     {
         return $this->belongsToMany(Fasum::class, 'kategori_fasums', 'kategori_id', 'fasum_id');

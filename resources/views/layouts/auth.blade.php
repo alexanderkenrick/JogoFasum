@@ -18,7 +18,7 @@
     <title>JogoFasum | @yield('title')</title>
 
     <meta name="description" content=""/>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+{{--    @vite(['resources/css/app.css', 'resources/js/app.js'])--}}
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{asset('assets/img/favicon/favicon.ico')}}"/>

@@ -28,7 +28,7 @@ class Laporan extends Model
     public function fasum() : BelongsToMany
     {
         return $this->belongsToMany(Fasum::class, 'laporan_fasums', 'laporan_id', 'fasum_id')
-            ->withPivot('status', 'image_path')
+            ->withPivot('status', 'image_path', 'image_selesai')
             ->withTimestamps();
     }
 
