@@ -18,6 +18,7 @@ Fasum
             <table class="table">
                 <thead>
                 <tr>
+                    <th>Gambar</th>
                     <th>Nama</th>
                     <th>Kategori</th>
                     <th>Dinas</th>
@@ -27,6 +28,7 @@ Fasum
                 <tbody class="table-border-bottom-0">
                 @foreach($fasums as $fasum)
                     <tr>
+                        <td><img src="{{asset('fasum/'.$fasum->image_path)}}" class="image"></td>
                         <td>{{$fasum->nama}}</td>
                         <td>
                             @foreach($fasum->kategori as $kategori)

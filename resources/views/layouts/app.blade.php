@@ -62,6 +62,14 @@
         .card .card-header h5{
             margin-bottom: 0 !important;
         }
+
+        table tbody img{
+            height: 100px;
+            width: auto;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            border-radius: 5px;
+        }
     </style>
     @yield('head')
 </head>

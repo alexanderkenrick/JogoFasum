@@ -54,7 +54,7 @@ class FasumController extends Controller
 
             $image = $request->file('image');
             $ext = $image->getClientOriginalExtension();
-            $imageNewName = $fasum->id."$ext";
+            $imageNewName = uniqid().".$ext";
             $image->move('fasum', $imageNewName);
 
             $fasum->image_path = $imageNewName;
