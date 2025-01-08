@@ -26,6 +26,7 @@ class LaporanController extends Controller
             ->get();
 
         $query = Laporan::withCount('fasum')
+            ->with('update_by')
             ->where('dinas_id', Auth::user()->dinas_id);
 
         if ($request->has('filter')) {
@@ -61,7 +62,7 @@ class LaporanController extends Controller
         for ($i = 0; $i < count($fasums); $i++) {
             $fasums[$i]["fasum"] = Fasum::find($fasums[$i]["id"]);
         }
-        return view("submit", compact("fasums"));
+        return view("laporan.create", compact("fasums"));
     }
 
 

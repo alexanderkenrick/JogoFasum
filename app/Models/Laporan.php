@@ -20,7 +20,7 @@ class Laporan extends Model
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
 
-    public function updated_by()
+    public function update_by()
     {
         return $this->belongsTo(User::class, 'updated_by', 'id');
     }
