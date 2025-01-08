@@ -43,12 +43,18 @@ class LaporanController extends Controller
 
     public function indexWarga()
     {
+        $jumlahLaporan = Laporan::where('created_by', Auth::id())
+            ->where('dinas_id', Auth::user()->dinas_id)
+            ->count();
+
         $laporans = Laporan::withCount('fasum')
             ->with('update_by')
+            ->where('created_by', Auth::id())
             ->where('dinas_id', Auth::user()->dinas_id)
             ->orderBy('created_at', 'desc')
             ->paginate(5);
-        return view('warga.dashboard', compact('laporans'));
+
+        return view('warga.dashboard', compact('laporans', 'jumlahLaporan'));
     }
 
     /**

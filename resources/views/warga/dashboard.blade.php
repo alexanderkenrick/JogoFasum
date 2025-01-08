@@ -7,7 +7,7 @@
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Home /</span> Dashboard</h4>
 
     <div class="card mb-3">
-        <h5 class="card-header">Jumlah laporan bulan ini: </h5>
+        <h5 class="card-header">Jumlah laporan bulan ini: <strong>{{$jumlahLaporan}}</strong></h5>
     </div>
 
     <div class="card">
