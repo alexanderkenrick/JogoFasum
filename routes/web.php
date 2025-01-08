@@ -33,7 +33,7 @@ Route::prefix('dinas')->middleware(['auth', 'role:dinas'])->group(function (){
     Route::post('/buat-user', [App\Http\Controllers\DinasController::class, 'createUser'])->name('dinas.create-user');
 
     Route::get('/edit-laporan/{id}', [App\Http\Controllers\LaporanController::class, 'DinasEditLaporan'])->name('dinas.edit-laporan');
-    Route::post('/edit-laporan', [App\Http\Controllers\LaporanController::class, 'DinasStoreLaporan'])->name('dinas.update-laporan');
+    Route::put('/edit-laporan', [App\Http\Controllers\LaporanController::class, 'DinasUpdateLaporan'])->name('dinas.update-laporan');
     Route::post('/update-status-fasum', [App\Http\Controllers\LaporanController::class, 'DinasUpdateFasum'])->name('dinas.update-fasum');
 
     Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('dinas.show-admin');

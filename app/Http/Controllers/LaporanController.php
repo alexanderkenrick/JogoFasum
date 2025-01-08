@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Fasum;
 use App\Models\Laporan;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -104,9 +105,36 @@ class LaporanController extends Controller
         return view("dinas.edit-laporan", compact('laporans'));
     }
 
-    public function DinasUpdateLaporan(string $id)
+    public function DinasUpdateLaporan(Request $request)
     {
-        //
+        $request->validate([
+            'image_selesai' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'keterangan_dinas' => 'nullable|string',
+        ]);
+        // dd($request);
+
+        try{
+            if ($request->hasFile('image_selesai')) {
+                $image = $request->file('image_selesai');
+                $ext = $image->getClientOriginalExtension();
+                $imageNewName = uniqid().".$ext";
+                $image->move('laporan', $imageNewName);
+
+                $laporan = Laporan::find($request->laporan_id);
+                $laporan->fasum()->updateExistingPivot($request->fasum_id, ['image_selesai' => $imageNewName, 'status' => 'Selesai']);
+            }
+            else { //this is 'tidak terselesaikan' case
+                $laporan = Laporan::find($request->laporan_id);
+                $laporan->fasum()->updateExistingPivot($request->fasum_id, ['keterangan_dinas' => $request->keterangan_dinas]);
+            }
+            $returnObj = ['status' => 'success', 'message' => "Laporan berhasil diubah"];
+            return redirect(route('dinas.edit-laporan', $laporan->id))->with('status', $returnObj);
+        }catch(Exception $e){
+            $returnObj = ['status' => 'error', 'message' => $e];
+            return redirect(route('dinas.edit-laporan', $laporan->id))->with('status', $returnObj);
+        }
+
+
     }
 
     public function DinasUpdateFasum(Request $request)
