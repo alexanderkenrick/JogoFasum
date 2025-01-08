@@ -26,16 +26,18 @@ Dashboard
                         @php
                         $statusArr = ['Antri', 'Dikerjakan', 'Selesai', 'Tidak terselesaikan'];
                         if($laporan->status == 'Antri'){
-                            $status = 'badge bg-';
+                            $status = 'badge bg-warning';
+                        }else if($laporan->status == 'Dikerjakan'){
+                            $status = 'badge bg-info';
+                        }else if($laporan->status == 'Selesai'){
+                            $status = 'badge bg-success';
+                        }else{
+                            $status = 'badge bg-danger';
                         }
                         @endphp
-                        <td>{{$fasum->nama}}</td>
-                        <td>
-                            @foreach($fasum->kategori as $kategori)
-                                <span class="badge bg-secondary">{{$kategori->nama}}</span>
-                            @endforeach
-                        </td>
-                        <td>{{$fasum->dinas->nama}}</td>
+                        <td><span class="{{$status}}">{{$laporan->status}}</span></td>
+                        <td>{{$laporan->fasum}}</td>
+                        <td>{{$laporan->created_at}}</td>
                         <td>
                             <button type="button" class="btn btn-icon btn-warning">
                                 <span class="bx bx-edit-alt me-1"></span>

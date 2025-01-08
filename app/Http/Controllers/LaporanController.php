@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Fasum;
 use App\Models\Laporan;
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LaporanController extends Controller
 {
@@ -14,7 +14,10 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        $laporans = Laporan::where('dinas_id', Auth::user()->dinas_id)->paginate(5);
+        $laporans = Laporan::withCount('fasum')
+            ->where('dinas_id', Auth::user()->dinas_id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
         return view('dinas.dashboard', compact('laporans'));
     }
 
