@@ -123,8 +123,8 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                     @enderror --}}
-                    <select name="dinas_id" id="dinas_id" class="form-control @error('dinas_id') is-invalid @enderror" required>
-                        <option value="">Pilih Kota Domisili</option>
+                    <select name="dinas_id" id="dinas_id" class="form-select @error('dinas_id') is-invalid @enderror" required>
+                        <option value="" >Pilih Kota Domisili</option>
                         @foreach ($kotas as $kota)
                             <option value="{{ $kota->id }}" {{ old('$kota') == $kota->id ? 'selected' : '' }}>
                                 {{ $kota->nama }}
