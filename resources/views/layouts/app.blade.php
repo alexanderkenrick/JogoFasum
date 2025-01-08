@@ -158,131 +158,97 @@
                     </a>
                 </li>
 
-                <!-- Layouts -->
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-layout"></i>
-                        <div data-i18n="Layouts">Layouts</div>
-                    </a>
+                @if(\Illuminate\Support\Facades\Auth::user()->role == 'dinas')
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Dinas</span>
+                    </li>
 
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="layouts-without-menu.html" class="menu-link">
-                                <div data-i18n="Without menu">Without menu</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="layouts-without-navbar.html" class="menu-link">
-                                <div data-i18n="Without navbar">Without navbar</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="layouts-container.html" class="menu-link">
-                                <div data-i18n="Container">Container</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="layouts-fluid.html" class="menu-link">
-                                <div data-i18n="Fluid">Fluid</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="layouts-blank.html" class="menu-link">
-                                <div data-i18n="Blank">Blank</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Akun Admin</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'dinas.show-admin' ? 'active' : ''}}">
+                                <a href="{{route('dinas.show-admin')}}" class="menu-link">
+                                    <div data-i18n="Account">Daftar Akun Admin</div>
+                                </a>
+                            </li>
+                            <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'dinas.create-user' ? 'active' : ''}}">
+                                <a href="{{route('dinas.create-user')}}" class="menu-link">
+                                    <div data-i18n="Notifications">Pendaftaran Akun Admin</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Dinas</span>
-                </li>
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Kategori</span>
+                    </li>
 
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                        <div data-i18n="Account Settings">Akun Admin</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'dinas.show-admin' ? 'active' : ''}}">
-                            <a href="{{route('dinas.show-admin')}}" class="menu-link">
-                                <div data-i18n="Account">Daftar Akun Admin</div>
-                            </a>
-                        </li>
-                        <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'dinas.create-user' ? 'active' : ''}}">
-                            <a href="{{route('dinas.create-user')}}" class="menu-link">
-                                <div data-i18n="Notifications">Pendaftaran Akun Admin</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Kategori</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'kategori.index' ? 'active' : ''}}">
+                                <a href="{{route('kategori.index')}}" class="menu-link">
+                                    <div data-i18n="Account">List Kategori</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Kategori</span>
-                </li>
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Fasum</span>
+                    </li>
 
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                        <div data-i18n="Account Settings">Kategori</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'kategori.index' ? 'active' : ''}}">
-                            <a href="{{route('kategori.index')}}" class="menu-link">
-                                <div data-i18n="Account">List Kategori</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Fasum</span>
-                </li>
-
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                        <div data-i18n="Account Settings">Fasum</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'dinas.index-fasum' ? 'active' : ''}}">
-                            <a href="{{route('dinas.index-fasum')}}" class="menu-link">
-                                <div data-i18n="Account">List Fasum</div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="menu-sub">
-                        <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'dinas.create-fasum' ? 'active' : ''}}">
-                            <a href="{{route('dinas.create-fasum')}}" class="menu-link">
-                                <div data-i18n="Account">Buat Fasum</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Laporan</span>
-                </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                        <div data-i18n="Account Settings">Laporan</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="{{route('laporan.index')}}" class="menu-link">
-                                <div data-i18n="Account">List Laporan</div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="{{route('laporan.create')}}" class="menu-link">
-                                <div data-i18n="Account">Buat Laporan</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Fasum</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'dinas.index-fasum' ? 'active' : ''}}">
+                                <a href="{{route('dinas.index-fasum')}}" class="menu-link">
+                                    <div data-i18n="Account">List Fasum</div>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="menu-sub">
+                            <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'dinas.create-fasum' ? 'active' : ''}}">
+                                <a href="{{route('dinas.create-fasum')}}" class="menu-link">
+                                    <div data-i18n="Account">Buat Fasum</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Fasum & Laporan</span>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Laporan</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{route('laporan.fasumList')}}" class="menu-link">
+                                    <div data-i18n="Account">List Fasum</div>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{route('laporan.create')}}" class="menu-link">
+                                    <div data-i18n="Account">Buat Laporan</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
             </ul>
         </aside>
         <!-- / Menu -->
@@ -302,19 +268,6 @@
                 </div>
 
                 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                    <!-- Search -->
-                    <div class="navbar-nav align-items-center">
-                        <div class="nav-item d-flex align-items-center">
-                            <i class="bx bx-search fs-4 lh-0"></i>
-                            <input
-                                type="text"
-                                class="form-control border-0 shadow-none"
-                                placeholder="Search..."
-                                aria-label="Search..."
-                            />
-                        </div>
-                    </div>
-                    <!-- /Search -->
 
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
 
@@ -327,49 +280,6 @@
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar avatar-online">
-                                                    <img src="../assets/img/avatars/1.png" alt
-                                                         class="w-px-40 h-auto rounded-circle"/>
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <span class="fw-semibold d-block">John Doe</span>
-                                                <small class="text-muted">Admin</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bx bx-user me-2"></i>
-                                        <span class="align-middle">My Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bx bx-cog me-2"></i>
-                                        <span class="align-middle">Settings</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                          <span class="flex-grow-1 align-middle">Billing</span>
-                          <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
                                 <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

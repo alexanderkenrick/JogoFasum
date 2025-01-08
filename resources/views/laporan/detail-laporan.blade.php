@@ -4,25 +4,19 @@
 @endsection
 
 @section('content')
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Laporan /</span> Edit Laporan</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Home /</span> Dashboard</h4>
     <div class="card mb-3">
         <h5 class="card-header">LAPORAN</h5>
         <div class="card-body">
-            <div class="mb-2">
-                <label for="name" class="form-label">Pelapor</label>
-                <input type="text" class="form-control" value="{{$laporans->create_by->name}}" id="name" name="name" disabled>
-            </div>
-            <div class="mb-2">
-                <label for="subject" class="form-label">Subject</label>
-                <input type="text" class="form-control form-control-lg" name="subject" value="{{$laporans->subject}}" disabled>
-            </div>
+            <label for="name" class="form-label">Subject</label>
+            <input type="text" class="form-control form-control-lg" value="{{$laporans->subject}}" disabled>
         </div>
     </div>
 
     <div class="card">
         <h5 class="card-header">Edit Laporan</h5>
         @if(session('status'))
-            <div class="alert alert-{{session('status')['status']}} alert-dismissible mx-3" role="alert">
+            <div class="alert alert-{{session('status')['status']}} alert-dismissible" role="alert">
                 {{session('status')['message']}}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -52,12 +46,9 @@
                         <td width="20%">{{$fasum->pivot->deskripsi}}</td>
                         <td>
 
-                            <select name="status" id="status-{{$laporans->id}}-{{$fasum->id}}"
-                                    onchange="updateStatusFasum({{$laporans->id}}, {{$fasum->id}})"
-                                    @if (in_array($fasum->pivot->status, ['Tidak terselesaikan', 'Selesai'])) disabled @endif>
+                            <select name="status" id="status-{{$laporans->id}}-{{$fasum->id}}" onchange="updateStatusFasum({{$laporans->id}}, {{$fasum->id}})" @if (in_array($fasum->pivot->status, ['Tidak terselesaikan', 'Selesai'])) disabled @endif>
                                 @foreach ($statusArr as $status)
-                                    <option
-                                        value="{{$status}}" {{$fasum->pivot->status == $status ? 'selected' : ''}}>{{$status}}</option>
+                                    <option value="{{$status}}" {{$fasum->pivot->status == $status ? 'selected' : ''}}>{{$status}}</option>
                                 @endforeach
                             </select>
                         </td>
@@ -91,9 +82,7 @@
                         <tr>
                             <td colspan="6">
                                 <label for="keterangan_dinas">Keterangan dari pihak kedinasan</label><br>
-                                <textarea style="width: 50vw; height: 10vh" name="keterangan_dinas"
-                                          id="keterangan_dinas" cols="10" rows="10"
-                                          required>{{$fasum->pivot->keterangan_dinas}}</textarea>
+                                <textarea style="width: 50vw; height: 10vh" name="keterangan_dinas" id="keterangan_dinas" cols="10" rows="10" required>{{$fasum->pivot->keterangan_dinas}}</textarea>
                             </td>
                         </tr>
                         @endif
@@ -103,6 +92,9 @@
                 </tbody>
             </table>
         </div>
+        {{-- <div class="card-footer">
+            {{$fasums->links('pagination::bootstrap-5')}}
+        </div> --}}
     </div>
 
     <script>
@@ -113,10 +105,10 @@
                 type: "POST",
                 url: "{{route('dinas.update-fasum')}}",
                 data: {
-                    '_token': '{{csrf_token()}}',
-                    'laporan_id': laporan_id,
-                    'fasum_id': fasum_id,
-                    'status': status
+                    '_token' : '{{csrf_token()}}',
+                    'laporan_id' : laporan_id,
+                    'fasum_id' : fasum_id,
+                    'status' : status
                 },
                 success: function (response) {
                     alert(response.message);

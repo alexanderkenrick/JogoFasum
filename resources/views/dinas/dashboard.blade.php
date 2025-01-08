@@ -33,9 +33,9 @@ Dashboard
     </div>
     <div class="card">
         <h5 class="card-header">Daftar Laporan</h5>
-        <div class="row mx-3">
-            <div class="col-2">Filter Belum Selesai:</div>
-            <div class="col">
+        <div class="row mx-3 mb-2">
+            <div class="col-2 d-flex align-items-center">Filter Belum Selesai:</div>
+            <div class="col-3">
                 <form method="GET" action="{{ route('dinas.dashboard') }}">
                     <div class="input-group">
                         <select name="filter" class="form-select" onchange="this.form.submit()">
@@ -44,7 +44,6 @@ Dashboard
                             <option value="14" {{ request('filter') == 14 ? 'selected' : '' }}>14 Hari</option>
                             <option value="30" {{ request('filter') == 30 ? 'selected' : '' }}>30 Hari</option>
                         </select>
-                        <button class="btn btn-primary" type="submit">Filter</button>
                     </div>
                 </form>
             </div>
@@ -80,7 +79,7 @@ Dashboard
                         <td><span class="{{$status}}">{{$laporan->status}}</span></td>
                         <td>{{$laporan->fasum_count}}</td>
                         <td>{{$laporan->created_at}}</td>
-                        <td>{{$laporan->update_by->name}}</td>
+                        <td>{{$laporan->update_by ? $laporan->update_by->name : '-'}}</td>
                         <td>
                             <button type="button" class="btn btn-icon btn-warning" onclick="window.location.href='{{ route('dinas.edit-laporan', $laporan->id) }}'">
                                 <span class="bx bx-edit-alt me-1"></span>

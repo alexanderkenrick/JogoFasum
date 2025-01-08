@@ -12,7 +12,7 @@
             </div>
         @endif
 
-        <form action="{{ route('laporan.store') }}" method="POST">
+        <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-4">
                 <label for="subject" class="form-label">Subject</label>
@@ -27,11 +27,14 @@
                                 <img src="{{ asset('/laporan/'.$fasum->image_path) }}" class="card-img-top" alt="{{ $fasum->nama }}">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $fasum->nama }}</h5>
-                                    <div class="mb-3">
+                                    <div class="mb-1">
                                         <input type="hidden" name="fasums[{{$index}}][id]" value="{{$fasum->id}}">
                                         <textarea name="fasums[{{$index}}][deskripsi]" class="form-control"
                                                   placeholder="Tulis deskripsi..." required></textarea>
                                     </div>
+                                </div>
+                                <div class="mb-3 px-2">
+                                    <input type="file" name="fasums[{{$index}}][image]" class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -48,4 +51,5 @@
         </form>
 
     </div>
+    <script src="{{asset('assets/vendor/js/bootstrap.js')}}"></script>
 @endsection

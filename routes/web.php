@@ -47,18 +47,19 @@ Route::prefix('dinas')->middleware(['auth', 'role:dinas'])->group(function (){
     Route::post('/fasum/store', [App\Http\Controllers\FasumController::class, 'storeDinas'])->name('dinas.store-fasum');
 });
 
-Route::prefix('laporan')->middleware(['auth', 'role:warga'])->group(function () {
-    Route::get('/', [LaporanController::class, 'index'])->name('laporan.index'); // List reports
-    Route::get('/create', [LaporanController::class, 'create'])->name('laporan.create'); // Report form
-    Route::post('/create-laporan', [LaporanController::class, 'store'])->name('laporan.store'); // Submit reports
-    Route::get('/fasum-list', [LaporanController::class, 'fasumList'])->name('laporan.fasumList');
-    Route::post('/add-to-cart', [LaporanController::class, 'addToCart'])->name('laporan.addToCart');
-    Route::get('/fasumList', [LaporanController::class, 'fasumList'])->name('laporan.fasumList');
-    Route::post('/laporan/add-to-session/{fasumId}', [LaporanController::class, 'addToSession'])->name('laporan.addToSession');
-});
-
 Route::prefix('warga')->middleware(['auth', 'role:warga'])->group(function (){
     Route::get('/', [App\Http\Controllers\LaporanController::class, 'indexWarga'])->name('warga.dashboard');
 });
+
+
+Route::prefix('laporan')->middleware(['auth', 'role:warga'])->group(function () {
+    Route::get('/create', [LaporanController::class, 'create'])->name('laporan.create'); // Report form
+    Route::post('/create-laporan', [LaporanController::class, 'store'])->name('laporan.store'); // Submit reports
+    Route::get('/fasum-list', [LaporanController::class, 'fasumList'])->name('laporan.fasumList');
+    Route::post('/laporan/add-to-session/{fasumId}', [LaporanController::class, 'addToSession'])->name('laporan.addToSession');
+
+    Route::get('/detail/{id}', [LaporanController::class, 'showLaporan'])->name('laporan.show');
+});
+
 
 // Route::resource('homes', HomeController::class);

@@ -13,9 +13,9 @@
     <div class="card">
         <h5 class="card-header">Daftar Laporan</h5>
         <div class="row mx-3">
-            <div class="col-2">Filter Belum Selesai:</div>
-            <div class="col">
-                <form method="GET" action="{{ route('dinas.dashboard') }}">
+            <div class="col-2 d-flex align-items-center">Filter Belum Selesai:</div>
+            <div class="col-3">
+                <form method="GET" action="{{ route('warga.dashboard') }}">
                     <div class="input-group">
                         <select name="filter" class="form-select" onchange="this.form.submit()">
                             <option value="">Pilih jumlah hari</option>
@@ -23,7 +23,6 @@
                             <option value="14" {{ request('filter') == 14 ? 'selected' : '' }}>14 Hari</option>
                             <option value="30" {{ request('filter') == 30 ? 'selected' : '' }}>30 Hari</option>
                         </select>
-                        <button class="btn btn-primary" type="submit">Filter</button>
                     </div>
                 </form>
             </div>
@@ -45,7 +44,6 @@
                     <tr>
                         <td>{{$laporan->subject}}</td>
                         @php
-                            $statusArr = ['Antri', 'Dikerjakan', 'Selesai', 'Tidak terselesaikan'];
                             if($laporan->status == 'Antri'){
                                 $status = 'badge bg-warning';
                             }else if($laporan->status == 'Dikerjakan'){

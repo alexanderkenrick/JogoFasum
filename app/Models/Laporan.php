@@ -15,7 +15,7 @@ class Laporan extends Model
 
     protected $fillable = ['dinas_id', 'kategori_id', 'image_path', 'status'];
 
-    public function created_by()
+    public function create_by()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
