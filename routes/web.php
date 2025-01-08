@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LaporanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,12 @@ Route::prefix('dinas')->middleware(['auth', 'role:dinas'])->group(function (){
     Route::get('/fasum', [App\Http\Controllers\FasumController::class, 'indexDinas'])->name('dinas.index-fasum');
     Route::get('/fasum/create', [App\Http\Controllers\FasumController::class, 'createDinas'])->name('dinas.create-fasum');
     Route::post('/fasum/store', [App\Http\Controllers\FasumController::class, 'storeDinas'])->name('dinas.store-fasum');
+});
+
+Route::prefix('laporan')->middleware(['auth'])->group(function () {
+    Route::get('/', [LaporanController::class, 'index'])->name('laporan.index'); // List reports
+    Route::get('/create', [LaporanController::class, 'create'])->name('laporan.create'); // Report form
+    Route::post('/', [LaporanController::class, 'store'])->name('laporan.store'); // Submit reports
 });
 
 Route::prefix('warga')->middleware(['auth', 'role:warga'])->group(function (){
