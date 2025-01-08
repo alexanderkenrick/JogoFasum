@@ -10,7 +10,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class LaporanController extends Controller
 {
@@ -44,10 +44,11 @@ class LaporanController extends Controller
     public function indexWarga()
     {
         $laporans = Laporan::withCount('fasum')
+            ->with('update_by')
             ->where('dinas_id', Auth::user()->dinas_id)
             ->orderBy('created_at', 'desc')
             ->paginate(5);
-        return view('dinas.dashboard', compact('laporans'));
+        return view('warga.dashboard', compact('laporans'));
     }
 
     /**
@@ -55,16 +56,46 @@ class LaporanController extends Controller
      */
     public function create(Request $request)
     {
-        $fasums = $request->session()->get("fasums");
-        if (!$fasums) {
-            $fasums = array();
+        $fasums = $request->session()->get("fasums", []);
+        $fasumArr = [];
+        foreach ($fasums as $fasum) {
+            $fasumArr[] = Fasum::find($fasum);
         }
-        for ($i = 0; $i < count($fasums); $i++) {
-            $fasums[$i]["fasum"] = Fasum::find($fasums[$i]["id"]);
-        }
-        return view("laporan.create", compact("fasums"));
+        return view("laporan.create", compact("fasumArr"));
     }
 
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'subject' => 'required|string',
+            'fasums' => 'required|array',
+        ]);
+        DB::beginTransaction();
+        try {
+            $laporan = new Laporan();
+            $laporan->dinas_id = Auth::user()->dinas_id;
+            $laporan->created_by = Auth::id();
+            $laporan->subject = $request->subject;
+            $laporan->save();
+
+            $fasums = $request->fasums;
+            foreach ($fasums as $fasum) {
+                $laporan->fasum()->attach($fasum['id'], ['deskripsi' => $fasum['deskripsi']]);
+            }
+
+            DB::commit();
+            $request->session()->forget('fasums');
+
+            session()->flash('status', 'success');
+            session()->flash('message', 'Sukses menambahkan Laporan');
+            return redirect()->route('laporan.create');
+        }catch (HttpException $e){
+            DB::rollBack();
+            session()->flash('status', 'success');
+            session()->flash('message', $e);
+            return redirect()->route('laporan.create');
+        }
+    }
 
     /**
      * Display  the specified resource.
@@ -190,28 +221,21 @@ class LaporanController extends Controller
 
     public function addToSession(Request $request, $fasumId)
     {
-        // Fetch the fasum by ID
-        $fasum = Fasum::findOrFail($fasumId);
+        $carts = $request->session()->get('fasums', []);
 
-        // Get the laporan session
-        $laporanSession = $request->session()->get('laporans', []);
+        try {
+            $carts[$fasumId] = $fasumId;
+            $request->session()->put('fasums', $carts);
 
-        // Check if the fasum is already in the session
-        $exists = collect($laporanSession)->contains('fasum_id', $fasumId);
+            session()->flash('status', 'success');
+            session()->flash('message', 'Sukses menambahkan Fasum');
 
-        if (!$exists) {
-            // Add new fasum to the session
-            $laporanSession[] = [
-                'fasum_id' => $fasum->id,
-                'nama' => $fasum->nama,
-                'status' => 'Belum Dilaporkan',
-            ];
-
-            // Update session
-            $request->session()->put('laporans', $laporanSession);
+            return redirect()->route('laporan.fasumList');
+        }catch (Exception $e){
+            session()->flash('status', 'error');
+            session()->flash('message', 'Gagal menambahkan Fasum');
+            return redirect()->route('laporan.fasumList');
         }
-
-        return redirect()->route('laporan.create')->with('status', 'Fasum ditambahkan ke laporan!');
     }
 
     function putReport(Request $request, Fasum $fasum){

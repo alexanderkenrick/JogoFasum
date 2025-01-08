@@ -59,7 +59,7 @@
                         <td><span class="{{$status}}">{{$laporan->status}}</span></td>
                         <td>{{$laporan->fasum_count}}</td>
                         <td>{{$laporan->created_at}}</td>
-                        <td>{{$laporan->updated_by->name}}</td>
+                        <td>{{$laporan->update_by ? $laporan->update_by->name : '-'}}</td>
                         <td>
                             <button type="button" class="btn btn-icon btn-danger">
                                 <span class="bx bx-trash me-1"></span>

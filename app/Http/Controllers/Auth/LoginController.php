@@ -43,8 +43,8 @@ class LoginController extends Controller
     {
         if ($user->role == 'dinas') {
             return redirect(route('dinas.dashboard'));
+        }else{
+            return redirect(route('warga.dashboard'));
         }
-
-        return redirect('/home'); // Default redirect jika role tidak dikenali
     }
 }
