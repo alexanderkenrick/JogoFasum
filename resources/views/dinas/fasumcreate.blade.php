@@ -108,9 +108,8 @@ Buat Fasum
                     </div>
                 </div>
 
-
                 <div class="mb-3">
-                    <label class="form-label" for="password">image</label>
+                    <label class="form-label" for="image">image</label>
                     <input class="form-control" type="file" id="formFile" name="image" required>
                 </div>
 

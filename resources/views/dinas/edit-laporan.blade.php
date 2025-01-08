@@ -12,50 +12,84 @@ Edit Laporan
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Bukti kondisi</th>
-                    <th>Status</th>
+                    <th>Kondisi sekarang</th>
                     <th>Nama Fasum</th>
                     <th>Deskripsi</th>
+                    <th>Status</th>
+                    <th>Bukti penanganan</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                @foreach($laporans as $laporan)
-                    <tr>
-                        <td><img src="{{asset('laporan/'.$laporan->image_path)}}" class="image"></td>
+                @foreach($laporans->fasum as $fasum)
+                <tr>
+                        <td><img src="{{asset('laporan/'.$fasum->pivot->image_path)}}" class="image"></td>
                         @php
                         $statusArr = ['Antri', 'Dikerjakan', 'Outsource', 'Selesai', 'Tidak terselesaikan'];
-                        if($laporan->status == 'Antri'){
-                            $status = 'badge bg-warning';
-                        }else if($laporan->status == 'Dikerjakan' || 'Outsource'){
-                            $status = 'badge bg-info';
-                        }else if($laporan->status == 'Selesai'){
-                            $status = 'badge bg-success';
-                        }else{
-                            $status = 'badge bg-danger';
-                        }
+                        $fin_evidence_required = "required";
                         @endphp
-                        <td><span class="{{$status}}">{{$laporan->status}}</span></td>
-                        <td>{{$laporan->fasum->nama}}</td>
-                        <td>{{$laporan->deskripsi}}</td>
+                        <td>{{$fasum->nama}}</td>
+                        <td width="20%">{{$fasum->pivot->deskripsi}}</td>
                         <td>
-                            <button type="button" class="btn btn-icon btn-warning" onclick="">
-                                <span class="bx bx-edit-alt me-1"></span>
-                            </button>
-                            <button type="button" class="btn btn-icon btn-danger">
-                                <span class="bx bx-trash me-1"></span>
-                            </button>
+                            <select name="status" id="status-{{$laporans->id}}-{{$fasum->id}}" onchange="updateStatusFasum({{$laporans->id}}, {{$fasum->id}})">
+                                @foreach ($statusArr as $status)
+                                <option value="{{$status}}" {{$fasum->pivot->status == $status ? 'selected' : ''}}>{{$status}}</option>
+                                @endforeach
+                            </select>
                         </td>
-                    </tr>
+                        <form action="{{ route('dinas.update-laporan') }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <td>
+                                @if ($fasum->pivot->image_selesai == "")
+                                    <div class='mb-3'>
+                                        <input type='file' id='formFile' name='image'
+                                            @if ($fasum->pivot->status == 'Antri')
+                                                disabled
+                                            @elseif ($fasum->pivot->status == 'Dikerjakan' || $fasum->pivot->status == 'Outsource')
+                                                required
+                                            @endif
+                                        >
+                                    </div>
+                                @else
+                                    <img src="{{ asset('laporan/' . $fasum->pivot->image_selesai) }}" class='image'>
+                                @endif
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn btn-primary">
+                                    Save
+                                </button>
+                            </td>
+                        </form>
+                </tr>
                 @endforeach
                 </tbody>
             </table>
         </div>
         {{-- <div class="card-footer">
-            {{$laporans->links('pagination::bootstrap-5')}}
+            {{$fasums->links('pagination::bootstrap-5')}}
         </div> --}}
     </div>
 
+    <script>
+        function updateStatusFasum(laporan_id, fasum_id) {
+            let status = $(`#status-${laporan_id}-${fasum_id}`).val();
+            console.log(status);
+            $.ajax({
+                type: "POST",
+                url: "{{route('dinas.update-fasum')}}",
+                data: {
+                    '_token' : '{{csrf_token()}}',
+                    'laporan_id' : laporan_id,
+                    'fasum_id' : fasum_id,
+                    'status' : status
+                },
+                success: function (response) {
+                    alert(response.message);
+                }
+            });
+        }
+    </script>
     <script src="{{asset('assets/vendor/js/bootstrap.js')}}"></script>
 @endsection
 

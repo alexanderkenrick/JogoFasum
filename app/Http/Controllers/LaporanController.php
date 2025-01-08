@@ -88,7 +88,7 @@ class LaporanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, Request $request)
     {
         $value = $request->session()->get('key');
         $data = $request->session()->all();
@@ -97,12 +97,23 @@ class LaporanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function DinasEditLaporan(string $id)
     {
         $laporans = Laporan::with('fasum')
-            ->where('id', $id)->firstOrFail();
-        // dd($laporans);
+            ->where('id', $id)->first();
         return view("dinas.edit-laporan", compact('laporans'));
+    }
+
+    public function DinasUpdateLaporan(string $id)
+    {
+        //
+    }
+
+    public function DinasUpdateFasum(Request $request)
+    {
+        $laporan = Laporan::find($request->laporan_id);
+        $laporan->fasum()->updateExistingPivot($request->fasum_id, ['status' => $request->status]);
+        return response()->json(["message" => "Update status berhasil"], 200);
     }
 
     /**

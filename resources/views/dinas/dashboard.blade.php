@@ -39,7 +39,7 @@ Dashboard
                         <td>{{$laporan->fasum_count}}</td>
                         <td>{{$laporan->created_at}}</td>
                         <td>
-                            <button type="button" class="btn btn-icon btn-warning" onclick="window.location.href='{{ route('dinas.create-laporan', $laporan->id) }}'">
+                            <button type="button" class="btn btn-icon btn-warning" onclick="window.location.href='{{ route('dinas.edit-laporan', $laporan->id) }}'">
                                 <span class="bx bx-edit-alt me-1"></span>
                             </button>
                             <button type="button" class="btn btn-icon btn-danger">
