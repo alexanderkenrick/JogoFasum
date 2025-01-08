@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Fasum;
 use App\Models\Laporan;
+use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
