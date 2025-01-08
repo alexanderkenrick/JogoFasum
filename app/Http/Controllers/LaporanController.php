@@ -14,7 +14,8 @@ class LaporanController extends Controller
      */
     public function index()
     {
-
+        $laporans = Laporan::where('dinas_id', Auth::user()->dinas_id)->paginate(5);
+        return view('dinas.dashboard', compact('laporans'));
     }
 
     /**

@@ -150,8 +150,9 @@
 
             <ul class="menu-inner py-1">
                 <!-- Dashboard -->
-                <li class="menu-item active">
-                    <a href="index.html" class="menu-link">
+                <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'dinas.dashboard' ||
+                \Illuminate\Support\Facades\Route::currentRouteName() == 'warga.dashboard' ? 'active' : ''}}">
+                    <a href="{{\Illuminate\Support\Facades\Auth::user()->role == 'dinas' ? route('dinas.dashboard') : route('warga.dashboard')}}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
                         <div data-i18n="Analytics">Dashboard</div>
                     </a>
@@ -194,7 +195,7 @@
                 </li>
 
                 <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Pimpinan</span>
+                    <span class="menu-header-text">Dinas</span>
                 </li>
 
                 <li class="menu-item">
@@ -203,12 +204,12 @@
                         <div data-i18n="Account Settings">Akun Admin</div>
                     </a>
                     <ul class="menu-sub">
-                        <li class="menu-item">
+                        <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'dinas.show-admin' ? 'active' : ''}}">
                             <a href="{{route('dinas.show-admin')}}" class="menu-link">
                                 <div data-i18n="Account">Daftar Akun Admin</div>
                             </a>
                         </li>
-                        <li class="menu-item">
+                        <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'dinas.create-user' ? 'active' : ''}}">
                             <a href="{{route('dinas.create-user')}}" class="menu-link">
                                 <div data-i18n="Notifications">Pendaftaran Akun Admin</div>
                             </a>
@@ -226,7 +227,7 @@
                         <div data-i18n="Account Settings">Kategori</div>
                     </a>
                     <ul class="menu-sub">
-                        <li class="menu-item">
+                        <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'kategori.index' ? 'active' : ''}}">
                             <a href="{{route('kategori.index')}}" class="menu-link">
                                 <div data-i18n="Account">List Kategori</div>
                             </a>
@@ -244,14 +245,14 @@
                         <div data-i18n="Account Settings">Fasum</div>
                     </a>
                     <ul class="menu-sub">
-                        <li class="menu-item">
+                        <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'dinas.index-fasum' ? 'active' : ''}}">
                             <a href="{{route('dinas.index-fasum')}}" class="menu-link">
                                 <div data-i18n="Account">List Fasum</div>
                             </a>
                         </li>
                     </ul>
                     <ul class="menu-sub">
-                        <li class="menu-item">
+                        <li class="menu-item {{\Illuminate\Support\Facades\Route::currentRouteName() == 'dinas.create-fasum' ? 'active' : ''}}">
                             <a href="{{route('dinas.create-fasum')}}" class="menu-link">
                                 <div data-i18n="Account">Buat Fasum</div>
                             </a>

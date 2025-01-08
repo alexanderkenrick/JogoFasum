@@ -1,33 +1,34 @@
 @extends('layouts.app')
 @section('title')
-Fasum
+Dashboard
 @endsection
 
 @section('content')
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Fasum /</span> Dashboard</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Home /</span> Dashboard</h4>
     <div class="card">
-        <div class="d-flex align-items-center justify-content-between">
-            <h5 class="card-header">Tabel Akun</h5>
-            <button type="button" class="btn btn-primary mx-5" onclick="window.location.href='{{ route('dinas.create-fasum') }}'">
-                <span class="tf-icons bx bx-plus"></span>&nbsp; Tambah Fasum
-            </button>
-        </div>
+        <h5 class="card-header">Daftar Laporan</h5>
 
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Gambar</th>
-                    <th>Nama</th>
-                    <th>Kategori</th>
-                    <th>Dinas</th>
+                    <th>Subject</th>
+                    <th>Status</th>
+                    <th>Jumlah Fasum</th>
+                    <th>Tanggal Dibuat</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                @foreach($fasums as $fasum)
+                @foreach($laporans as $laporan)
                     <tr>
-                        <td><img src="{{asset('fasum/'.$fasum->image_path)}}" class="image"></td>
+                        <td>{{$laporan->subject}}</td>
+                        @php
+                        $statusArr = ['Antri', 'Dikerjakan', 'Selesai', 'Tidak terselesaikan'];
+                        if($laporan->status == 'Antri'){
+                            $status = 'badge bg-';
+                        }
+                        @endphp
                         <td>{{$fasum->nama}}</td>
                         <td>
                             @foreach($fasum->kategori as $kategori)

@@ -26,7 +26,8 @@ Route::middleware(['auth'])->group(function (){
     Route::post('/kategori', [\App\Http\Controllers\KategoriController::class, 'store'])->name('kategori.store');
 });
 
-Route::prefix('dinas')->middleware(['auth', 'role:dinas'])->group(function (){
+Route::prefix('dinas')->middleware(['auth', 'role:wargr'])->group(function (){
+    Route::get('/', [App\Http\Controllers\LaporanController::class, 'index'])->name('dinas.dashboard');
     Route::get('/buat-user', [App\Http\Controllers\DinasController::class, 'showCreateUser'])->name('dinas.show-create-user');
     Route::post('/buat-user', [App\Http\Controllers\DinasController::class, 'createUser'])->name('dinas.create-user');
 
