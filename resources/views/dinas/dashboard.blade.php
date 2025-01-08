@@ -52,7 +52,7 @@ Dashboard
             </table>
         </div>
         <div class="card-footer">
-            {{$fasums->links('pagination::bootstrap-5')}}
+            {{$laporans->links('pagination::bootstrap-5')}}
         </div>
     </div>
 
