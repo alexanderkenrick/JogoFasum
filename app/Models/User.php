@@ -58,7 +58,7 @@ class User extends Authenticatable
 
     public function laporan() : HasMany
     {
-        return $this->hasMany(Laporan::class, 'user_id', 'id');
+        return $this->hasMany(Laporan::class, 'created_by', 'id');
     }
 
     public function logStatus() : HasMany
