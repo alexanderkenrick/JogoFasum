@@ -80,7 +80,7 @@ Dashboard
                         <td><span class="{{$status}}">{{$laporan->status}}</span></td>
                         <td>{{$laporan->fasum_count}}</td>
                         <td>{{$laporan->created_at}}</td>
-                        <td>{{$laporan->updated_by->name}}</td>
+                        <td>{{$laporan->updated_by->nama}}</td>
                         <td>
                             <button type="button" class="btn btn-icon btn-warning" onclick="window.location.href='{{ route('dinas.edit-laporan', $laporan->id) }}'">
                                 <span class="bx bx-edit-alt me-1"></span>
