@@ -24,7 +24,8 @@ class User extends Authenticatable
         'email',
         'password',
         'kota',
-        'role'
+        'role',
+        'dinas_id',
     ];
 
     /**
