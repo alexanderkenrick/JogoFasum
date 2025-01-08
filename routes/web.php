@@ -50,7 +50,7 @@ Route::prefix('laporan')->middleware(['auth'])->group(function () {
     Route::get('/fasum-list', [LaporanController::class, 'fasumList'])->name('laporan.fasumList');
     Route::post('/add-to-cart', [LaporanController::class, 'addToCart'])->name('laporan.addToCart');
     Route::get('/fasumList', [LaporanController::class, 'fasumList'])->name('laporan.fasumList');
-    Route::post('/add-to-cart', [LaporanController::class, 'addToCart'])->name('laporan.addToCart');
+    Route::post('/laporan/add-to-session/{fasumId}', [LaporanController::class, 'addToSession'])->name('laporan.addToSession');
 });
 
 Route::prefix('warga')->middleware(['auth', 'role:warga'])->group(function (){

@@ -25,68 +25,21 @@ class LaporanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        $fasums = Fasum::where('dinas_id', Auth::user()->dinas_id)->get();
-        return view('laporan.create', compact('fasums'));
+        $fasums = $request->session()->get("fasums");
+        if (!$fasums) {
+            $fasums = array();
+        }
+        for ($i = 0; $i < count($fasums); $i++) {
+            $fasums[$i]["fasum"] = Fasum::find($fasums[$i]["id"]);
+        }
+        return view("submit", compact("fasums"));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    // public function store(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'deskripsi' => 'required|string',
-    //         'fasums' => 'required|array',
-    //         'fasums.*.fasum_id' => 'required|exists:fasums,id',
-    //         'fasums.*.image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-    //     ]);
-
-    //     DB::beginTransaction();
-    //     try {
-    //         $laporan = new Laporan();
-    //         $laporan->status = 'Antri';
-    //         $laporan->created_by = Auth::id();
-    //         $laporan->deskripsi = $request->deskripsi;
-    //         $laporan->created_at = now();
-    //         $laporan->save();
-
-    //         foreach ($request->fasums as $fasumData) {
-    //             $imagePath = null;
-
-    //             if (isset($fasumData['image'])) {
-    //                 $image = $fasumData['image'];
-    //                 $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
-    //                 $image->move(public_path('laporans'), $imageName);
-    //                 $imagePath = $imageName;
-    //             }
-
-    //             // Attach facility with additional pivot data
-    //             $laporan->fasum()->attach($fasumData['fasum_id'], [
-    //                 'status' => 'Antri',
-    //                 'image_path' => $imagePath,
-    //                 'created_at' => now(),
-    //             ]);
-    //         }
-
-    //         DB::commit();
-
-    //         return redirect()->route('laporan.create')->with('status', [
-    //             'status' => 'success',
-    //             'message' => 'Report submitted successfully!',
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         DB::rollBack();
-    //         return redirect()->route('laporan.create')->with('status', [
-    //             'status' => 'error',
-    //             'message' => 'Failed to submit the report.',
-    //         ]);
-    //     }
-    // }
 
     /**
-     * Display the specified resource.
+     * Display  the specified resource.
      */
     public function show(string $id, Request $request)
     {
@@ -179,4 +132,75 @@ class LaporanController extends Controller
 
         return view('laporan.fasum-list', compact('fasums'));
     }
+
+    public function addToSession(Request $request, $fasumId)
+    {
+        // Fetch the fasum by ID
+        $fasum = Fasum::findOrFail($fasumId);
+
+        // Get the laporan session
+        $laporanSession = $request->session()->get('laporans', []);
+
+        // Check if the fasum is already in the session
+        $exists = collect($laporanSession)->contains('fasum_id', $fasumId);
+
+        if (!$exists) {
+            // Add new fasum to the session
+            $laporanSession[] = [
+                'fasum_id' => $fasum->id,
+                'nama' => $fasum->nama,
+                'status' => 'Belum Dilaporkan',
+            ];
+
+            // Update session
+            $request->session()->put('laporans', $laporanSession);
+        }
+
+        return redirect()->route('laporan.create')->with('status', 'Fasum ditambahkan ke laporan!');
+    }
+
+    function putReport(Request $request, Fasum $fasum){
+        // load report array
+        $fasums = $request->session()->get("fasums");
+        // create a new array if there are no reports yet
+        if (!$fasums) {
+          $fasums = array();
+        }
+        // determine if this is an insert or update operation
+        // by finding if the place's id is already in the array
+        $idx = -1;
+        for ($i = 0; $i < count($fasums); $i++) {
+          if ($fasums[$i]["id"] == $fasum->id) {
+            $idx = $i;
+          }
+        }
+
+        if ($idx < 0) {
+        // add new report
+        $reports[] = ["id" => $fasum->id, "report" => $request->fasum];
+        } else {
+        // update existing report
+        $fasums[$idx]["fasum"] = $request->fasum;
+        }
+        // save the report array to session
+        $request->session()->put("fasums", $reports);
+        // redirect to submit page
+        return redirect("/submit")->with("status", "Sukses menambah laporan");
+    }
+
+    function submit(Request $request){
+        // load report array
+        $fasums = $request->session()->get("fasums");
+        // create a new array if there are no reports yet
+        if (!$fasums) {
+          $fasums = array();
+        }
+        // load place data for each report
+        for ($i = 0; $i < count($fasums); $i++) {
+          $fasums[$i]["fasum"] = Fasum::find($fasums[$i]["id"]);
+        }
+        // render submit page with all pending reports
+        return view("submit", compact("reports"));
+      }
+
 }

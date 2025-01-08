@@ -259,6 +259,30 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Laporan</span>
+                </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                        <div data-i18n="Account Settings">Laporan</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{route('laporan.index')}}" class="menu-link">
+                                <div data-i18n="Account">List Laporan</div>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{route('laporan.create')}}" class="menu-link">
+                                <div data-i18n="Account">Buat Laporan</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </aside>
         <!-- / Menu -->

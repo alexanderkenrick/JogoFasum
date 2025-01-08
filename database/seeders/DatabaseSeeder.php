@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DinasSeeder::class,
             KategoriSeeder::class,
+            FasumsTableSeeder::class
         ]);
     }
 }

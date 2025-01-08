@@ -11,12 +11,16 @@ Buat Laporan
         @foreach($fasums as $fasum)
             <div class="col-md-4">
                 <div class="card mb-3">
-                    <img src="{{ asset('fasum-images/' . $fasum->image) }}" class="card-img-top" alt="{{ $fasum->nama }}">
+                    <img src="{{ asset($fasum->image_path) }}" class="card-img-top" alt="{{ $fasum->nama }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ $fasum->nama }}</h5>
-                        <a href="{{ route('laporan.addToSession', $fasum->id) }}" class="btn btn-primary">
-                            Buat Laporan
-                        </a>
+                        <form action="{{ route('laporan.addToSession', $fasum->id) }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <textarea name="report" class="form-control" placeholder="Tulis deskripsi..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Buat Laporan</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -24,3 +28,5 @@ Buat Laporan
     </div>
 </div>
 @endsection
+
+
