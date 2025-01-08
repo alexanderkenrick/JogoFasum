@@ -57,8 +57,9 @@ Route::prefix('laporan')->middleware(['auth', 'role:warga'])->group(function () 
     Route::post('/create-laporan', [LaporanController::class, 'store'])->name('laporan.store'); // Submit reports
     Route::get('/fasum-list', [LaporanController::class, 'fasumList'])->name('laporan.fasumList');
     Route::post('/laporan/add-to-session/{fasumId}', [LaporanController::class, 'addToSession'])->name('laporan.addToSession');
+    Route::post('/laporan/remove-from-session', [LaporanController::class, 'deleteFromSession'])->name('laporan.deleteFromSession');
 
-    Route::get('/detail/{id}', [LaporanController::class, 'showLaporan'])->name('laporan.show');
+    Route::get('/detail/{id}', [LaporanController::class, 'showWargaLaporan'])->name('laporan.show');
 });
 
 

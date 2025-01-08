@@ -47,6 +47,18 @@ Dashboard
                     </div>
                 </form>
             </div>
+
+            <div class="col-2 d-flex align-items-center">Pilih Bulan:</div>
+            <div class="col-3">
+                <form method="GET" action="{{ route('dinas.dashboard') }}">
+                    <select name="month" id="month" class="form-select" onchange="this.form.submit()">
+                        <option value="">-- Pilih Bulan --</option>
+                        @foreach (range(1, 12) as $month)
+                            <option value="{{ $month }}" {{request('month') == $month ? 'selected' : ''}}>{{ date('F', mktime(0, 0, 0, $month, 1)) }}</option>
+                        @endforeach
+                    </select>
+                </form>
+            </div>
         </div>
         <div class="table-responsive text-nowrap">
             <table class="table">

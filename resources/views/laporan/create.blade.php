@@ -36,12 +36,16 @@
                                 <div class="mb-3 px-2">
                                     <input type="file" name="fasums[{{$index}}][image]" class="form-control" required>
                                 </div>
+                                <div class="mb-3 px-2">
+                                    <button type="button" class="btn btn-danger" onclick="deleteFromSession({{$fasum->id}})">Batalkan</button>
+                                </div>
                             </div>
                         </div>
                     @endforeach
                 @else
                     <div class="box info-box">
-                        Belum ada fasilitas umum yang dimuat
+                        Belum ada fasilitas umum yang dimuat <br>
+                        <a href="{{ route('laporan.fasumList') }}" class="btn btn-primary">Pilih fasilitas umum</a>
                     </div>
                 @endif
             </div>
@@ -51,5 +55,20 @@
         </form>
 
     </div>
+    <script>
+        function deleteFromSession(id) {
+            $.ajax({
+                url: "{{ route('laporan.deleteFromSession') }}",
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: id
+                },
+                success: function (response) {
+                    location.reload();
+                }
+            });
+        }
+    </script>
     <script src="{{asset('assets/vendor/js/bootstrap.js')}}"></script>
 @endsection

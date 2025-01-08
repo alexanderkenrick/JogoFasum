@@ -29,11 +29,16 @@ class LaporanController extends Controller
             ->with('update_by')
             ->where('dinas_id', Auth::user()->dinas_id);
 
-        if ($request->has('filter')) {
+        if($request->has('filter') && $request->input('filter')){
             $days = (int) $request->input('filter');
             $dateFrom = Carbon::now()->subDays($days);
             $query->where('created_at', '>=', $dateFrom);
             $query->whereIn('status', ['Antri', 'Dikerjakan']);
+        }
+
+        if($request->has('month') && $request->input('month')){
+            $month = $request->input('month');
+            $query->whereMonth('created_at', $month);
         }
 
         $laporans = $query->orderBy('created_at', 'desc')
@@ -52,7 +57,7 @@ class LaporanController extends Controller
             ->where('created_by', Auth::id())
             ->where('dinas_id', Auth::user()->dinas_id);
 
-        if ($request->has('filter')) {
+        if ($request->has('filter') && $request->input('filter')) {
             $days = (int) $request->input('filter');
             $dateFrom = Carbon::now()->subDays($days);
             $query->where('created_at', '>=', $dateFrom);
@@ -133,12 +138,12 @@ class LaporanController extends Controller
         $data = $request->session()->all();
     }
 
-    public function showLaporan(string $id)
+    public function showWargaLaporan(string $id)
     {
-        $laporan = Laporan::with('fasum')
+        $laporans = Laporan::with('fasum')
             ->where('id', $id)->first();
 
-        return view('laporan.detail-laporan', compact('laporan'));
+        return view('laporan.detail-laporan', compact('laporans'));
     }
 
     /**
@@ -271,6 +276,25 @@ class LaporanController extends Controller
             session()->flash('status', 'error');
             session()->flash('message', 'Gagal menambahkan Fasum');
             return redirect()->route('laporan.fasumList');
+        }
+    }
+
+    public function deleteFromSession(Request $request)
+    {
+        $carts = $request->session()->get('fasums', []);
+
+        try {
+            unset($carts[$request->id]);
+            $request->session()->put('fasums', $carts);
+
+            session()->flash('status', 'success');
+            session()->flash('message', 'Sukses menghapus Fasum');
+
+            return redirect()->route('laporan.create');
+        }catch (Exception $e){
+            session()->flash('status', 'error');
+            session()->flash('message', 'Gagal menghapus Fasum');
+            return redirect()->route('laporan.create');
         }
     }
 }

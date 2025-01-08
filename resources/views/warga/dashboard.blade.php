@@ -41,7 +41,7 @@
                 </thead>
                 <tbody class="table-border-bottom-0">
                 @foreach($laporans as $laporan)
-                    <tr>
+                    <tr onclick="window.location = '{{route('laporan.show', ['id'=>$laporan->id])}}'" style="cursor: pointer;">
                         <td>{{$laporan->subject}}</td>
                         @php
                             if($laporan->status == 'Antri'){
