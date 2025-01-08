@@ -31,13 +31,14 @@ Route::prefix('dinas')->middleware(['auth', 'role:dinas'])->group(function (){
     Route::get('/buat-user', [App\Http\Controllers\DinasController::class, 'showCreateUser'])->name('dinas.show-create-user');
     Route::post('/buat-user', [App\Http\Controllers\DinasController::class, 'createUser'])->name('dinas.create-user');
 
+    Route::get('/edit-laporan/{id}', [App\Http\Controllers\LaporanController::class, 'edit'])->name('dinas.create-laporan');
+    Route::post('/edit-laporan', [App\Http\Controllers\LaporanController::class, 'store'])->name('dinas.store-laporan');
+
     Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('dinas.show-admin');
 
     Route::get('/fasum', [App\Http\Controllers\FasumController::class, 'indexDinas'])->name('dinas.index-fasum');
     Route::get('/fasum/create', [App\Http\Controllers\FasumController::class, 'createDinas'])->name('dinas.create-fasum');
     Route::post('/fasum/store', [App\Http\Controllers\FasumController::class, 'storeDinas'])->name('dinas.store-fasum');
-
-    
 });
 
 Route::prefix('warga')->middleware(['auth', 'role:warga'])->group(function (){

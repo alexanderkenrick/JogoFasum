@@ -26,8 +26,7 @@ class LaporanController extends Controller
      */
     public function create()
     {
-        $fasums = Fasum::where();
-        return view("fasum.report", compact("fasums"));
+        //
     }
 
     /**
@@ -43,7 +42,7 @@ class LaporanController extends Controller
      */
     public function show(string $id)
     {
-        //
+
     }
 
     /**
@@ -51,7 +50,10 @@ class LaporanController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $laporans = Laporan::with('fasum')
+            ->where('id', $id)->firstOrFail();
+        // dd($laporans);
+        return view("dinas.edit-laporan", compact('laporans'));
     }
 
     /**

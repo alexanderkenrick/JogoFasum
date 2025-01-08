@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-Dashboard
+Edit Laporan
 @endsection
 
 @section('content')
@@ -12,22 +12,22 @@ Dashboard
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Subject</th>
+                    <th>Bukti kondisi</th>
                     <th>Status</th>
-                    <th>Jumlah Fasum</th>
-                    <th>Tanggal Dibuat</th>
+                    <th>Nama Fasum</th>
+                    <th>Deskripsi</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
                 @foreach($laporans as $laporan)
                     <tr>
-                        <td>{{$laporan->subject}}</td>
+                        <td><img src="{{asset('laporan/'.$laporan->image_path)}}" class="image"></td>
                         @php
-                        $statusArr = ['Antri', 'Dikerjakan', 'Selesai', 'Tidak terselesaikan'];
+                        $statusArr = ['Antri', 'Dikerjakan', 'Outsource', 'Selesai', 'Tidak terselesaikan'];
                         if($laporan->status == 'Antri'){
                             $status = 'badge bg-warning';
-                        }else if($laporan->status == 'Dikerjakan'){
+                        }else if($laporan->status == 'Dikerjakan' || 'Outsource'){
                             $status = 'badge bg-info';
                         }else if($laporan->status == 'Selesai'){
                             $status = 'badge bg-success';
@@ -36,10 +36,10 @@ Dashboard
                         }
                         @endphp
                         <td><span class="{{$status}}">{{$laporan->status}}</span></td>
-                        <td>{{$laporan->fasum_count}}</td>
-                        <td>{{$laporan->created_at}}</td>
+                        <td>{{$laporan->fasum->nama}}</td>
+                        <td>{{$laporan->deskripsi}}</td>
                         <td>
-                            <button type="button" class="btn btn-icon btn-warning" onclick="window.location.href='{{ route('dinas.create-laporan', $laporan->id) }}'">
+                            <button type="button" class="btn btn-icon btn-warning" onclick="">
                                 <span class="bx bx-edit-alt me-1"></span>
                             </button>
                             <button type="button" class="btn btn-icon btn-danger">
@@ -51,9 +51,9 @@ Dashboard
                 </tbody>
             </table>
         </div>
-        <div class="card-footer">
+        {{-- <div class="card-footer">
             {{$laporans->links('pagination::bootstrap-5')}}
-        </div>
+        </div> --}}
     </div>
 
     <script src="{{asset('assets/vendor/js/bootstrap.js')}}"></script>
