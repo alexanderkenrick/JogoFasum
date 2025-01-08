@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class LaporanController extends Controller
 {
@@ -16,11 +17,10 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        $laporans = Laporan::withCount('fasum')
-            ->where('dinas_id', Auth::user()->dinas_id)
-            ->orderBy('created_at', 'desc')
-            ->paginate(5);
-        return view('dinas.dashboard', compact('laporans'));
+        $sessionReports = Session::get('laporan_cart', []);
+        $laporan = Laporan::where('created_by', Auth::id())->latest()->first();
+
+        return view('laporan.index', compact('laporan', 'sessionReports'));
     }
 
     /**
@@ -35,56 +35,56 @@ class LaporanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'deskripsi' => 'required|string',
-            'fasums' => 'required|array',
-            'fasums.*.fasum_id' => 'required|exists:fasums,id',
-            'fasums.*.image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+    // public function store(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'deskripsi' => 'required|string',
+    //         'fasums' => 'required|array',
+    //         'fasums.*.fasum_id' => 'required|exists:fasums,id',
+    //         'fasums.*.image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+    //     ]);
 
-        DB::beginTransaction();
-        try {
-            $laporan = new Laporan();
-            $laporan->status = 'Antri';
-            $laporan->created_by = Auth::id();
-            $laporan->deskripsi = $request->deskripsi;
-            $laporan->created_at = now();
-            $laporan->save();
+    //     DB::beginTransaction();
+    //     try {
+    //         $laporan = new Laporan();
+    //         $laporan->status = 'Antri';
+    //         $laporan->created_by = Auth::id();
+    //         $laporan->deskripsi = $request->deskripsi;
+    //         $laporan->created_at = now();
+    //         $laporan->save();
 
-            foreach ($request->fasums as $fasumData) {
-                $imagePath = null;
+    //         foreach ($request->fasums as $fasumData) {
+    //             $imagePath = null;
 
-                if (isset($fasumData['image'])) {
-                    $image = $fasumData['image'];
-                    $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
-                    $image->move(public_path('laporans'), $imageName);
-                    $imagePath = $imageName;
-                }
+    //             if (isset($fasumData['image'])) {
+    //                 $image = $fasumData['image'];
+    //                 $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+    //                 $image->move(public_path('laporans'), $imageName);
+    //                 $imagePath = $imageName;
+    //             }
 
-                // Attach facility with additional pivot data
-                $laporan->fasum()->attach($fasumData['fasum_id'], [
-                    'status' => 'Antri',
-                    'image_path' => $imagePath,
-                    'created_at' => now(),
-                ]);
-            }
+    //             // Attach facility with additional pivot data
+    //             $laporan->fasum()->attach($fasumData['fasum_id'], [
+    //                 'status' => 'Antri',
+    //                 'image_path' => $imagePath,
+    //                 'created_at' => now(),
+    //             ]);
+    //         }
 
-            DB::commit();
+    //         DB::commit();
 
-            return redirect()->route('laporan.create')->with('status', [
-                'status' => 'success',
-                'message' => 'Report submitted successfully!',
-            ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()->route('laporan.create')->with('status', [
-                'status' => 'error',
-                'message' => 'Failed to submit the report.',
-            ]);
-        }
-    }
+    //         return redirect()->route('laporan.create')->with('status', [
+    //             'status' => 'success',
+    //             'message' => 'Report submitted successfully!',
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         return redirect()->route('laporan.create')->with('status', [
+    //             'status' => 'error',
+    //             'message' => 'Failed to submit the report.',
+    //         ]);
+    //     }
+    // }
 
     /**
      * Display the specified resource.
@@ -102,6 +102,7 @@ class LaporanController extends Controller
     {
         $laporans = Laporan::with('fasum')
             ->where('id', $id)->first();
+        // dd($laporans);
         return view("dinas.edit-laporan", compact('laporans'));
     }
 
@@ -200,11 +201,10 @@ class LaporanController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function fasumList()
     {
-        //
+        $fasums = Fasum::where('dinas_terkait', Auth::user()->dinas_id)->get();
+
+        return view('laporan.fasum-list', compact('fasums'));
     }
 }
