@@ -109,7 +109,7 @@
 
                 <div class="mb-3">
                     <label for="kota" class="form-label">Kota Domisili</label>
-                    <input type="text"
+                    {{-- <input type="text"
                            class="form-control @error('kota') is-invalid @enderror"
                            id="kota"
                            name="kota"
@@ -118,6 +118,19 @@
                            required
                            autocomplete="kota"
                     />
+                    @error('kota')
+                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                    @enderror --}}
+                    <select name="kota" id="kota" class="form-control @error('dinas_id') is-invalid @enderror" required>
+                        <option value="">Pilih Kota Domisili</option>
+                        @foreach ($kotas as $kota)
+                            <option value="{{ $kota->id }}" {{ old('$kota') == $kota->id ? 'selected' : '' }}>
+                                {{ $kota->nama }}
+                            </option>
+                        @endforeach
+                    </select>
                     @error('kota')
                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

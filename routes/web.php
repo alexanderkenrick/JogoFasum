@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 
 Route::middleware(['auth'])->group(function (){
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -33,3 +37,4 @@ Route::prefix('dinas')->middleware(['auth', 'role:dinas'])->group(function (){
     Route::post('/fasum/store', [App\Http\Controllers\FasumController::class, 'storeDinas'])->name('dinas.store-fasum');
 });
 
+// Route::resource('homes', HomeController::class);
