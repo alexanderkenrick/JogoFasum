@@ -22,10 +22,10 @@
                             <td>{{$user->name}}</td>
                             <td>{{$user->dinas->nama}}</td>
                             <td>
-                                <button type="button" class="btn btn-icon btn-warning">
+                                <button type="button" class="btn btn-icon btn-warning" onclick="window.location.href='{{ route('dinas.show-detal-admin', ['id'=>$user->id]) }}'">
                                     <span class="bx bx-edit-alt me-1"></span>
                                 </button>
-                                <button type="button" class="btn btn-icon btn-danger">
+                                <button type="button" class="btn btn-icon btn-danger" onclick="window.location.href='{{route('dinas.delete-user-admin'), ['id'=>$user->id]}}">
                                     <span class="bx bx-trash me-1"></span>
                                 </button>
                             </td>

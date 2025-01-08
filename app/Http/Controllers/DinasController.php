@@ -35,7 +35,7 @@ class DinasController extends Controller
             $user->password = bcrypt($request->password);
             $user->dinas_id = $request->dinas;
             $user->kota = $kota;
-            $user->role = $request->role;
+            $user->role = 'dinas';
 
             if(!$user->save()){
                 throw new Exception('User gagal dibuat');
@@ -49,5 +49,44 @@ class DinasController extends Controller
         }
     }
 
+    public function showAdmin(string $id)
+    {
+        $user = User::find($id);
+        $dinases = Dinas::all()->sortBy('name');
+        return view('dinas.updateAdmin', compact('user', 'dinases'));
+    }
 
+    public function updateUserDinas(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'nullable|string',
+            'password' => 'nullable|string',
+            'dinas' => 'required|exists:dinas,id',
+        ]);
+
+        try {
+            $user = User::find($request->user_id);
+            $user->name = $request->name;
+            $user->dinas_id = $request->dinas;
+            if($request->password){
+                $user->password = bcrypt($request->password);
+            }
+            $user->save();
+
+            $returnObj = ['status' => 'success', 'message' => 'Update berhasil'];
+            return redirect()->route('dinas.show-admin')->with('status', $returnObj);
+        }catch (Exception $e){
+            $returnObj = ['status' => 'error', 'message' => $e];
+            return redirect()->route('dinas.show-admin')->with('status', $returnObj);
+        }
+
+    }
+
+    public function deleteUserDinas(string $id)
+    {
+        $user = User::find($id);
+        $user->delete();
+        $returnObj = ['status' => 'success', 'message' => 'User berhasil dihapus'];
+        return redirect()->route('dinas.show-admin')->with('status', $returnObj);
+    }
 }

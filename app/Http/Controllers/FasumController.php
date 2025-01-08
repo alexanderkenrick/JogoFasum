@@ -13,12 +13,19 @@ use Mockery\Exception;
 
 class FasumController extends Controller
 {
-    public function indexDinas()
+    public function indexDinas(Request $request)
     {
-        $fasums = Fasum::with('kategori')
-            ->with('dinas')
-            ->where('dinas_terkait', Auth::user()->dinas_id)
-            ->paginate(5);
+        $query = Fasum::with('kategori')->with('dinas')
+            ->where('dinas_terkait', Auth::user()->dinas_id);
+
+        if ($request->has('filter')) {
+            $days = (int) $request->input('filter');
+            $dateFrom = Carbon::now()->subDays($days);
+            $query->where('created_at', '>=', $dateFrom);
+            $query->whereIn('status', ['Antri', 'Dikerjakan']);
+        }
+
+        $fasums = $query->paginate(5)->appends($request->except('page'));
         return view('dinas.fasum', compact('fasums'));
     }
 

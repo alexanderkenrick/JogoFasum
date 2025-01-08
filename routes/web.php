@@ -31,6 +31,10 @@ Route::prefix('dinas')->middleware(['auth', 'role:dinas'])->group(function (){
     Route::get('/', [App\Http\Controllers\LaporanController::class, 'index'])->name('dinas.dashboard');
     Route::get('/buat-user', [App\Http\Controllers\DinasController::class, 'showCreateUser'])->name('dinas.show-create-user');
     Route::post('/buat-user', [App\Http\Controllers\DinasController::class, 'createUser'])->name('dinas.create-user');
+    Route::get('/edit-admin/{id}', [\App\Http\Controllers\DinasController::class, 'showAdmin'])->name('dinas.show-detal-admin');
+    Route::post('edit-admin-save', [\App\Http\Controllers\DinasController::class, 'updateUserDinas'])->name('dinas.update-admin');
+    Route::delete('/delete-admin/{id}', [\App\Http\Controllers\DinasController::class, 'deleteUserDinas'])->name('dinas.delete-user-admin');
+
 
     Route::get('/edit-laporan/{id}', [App\Http\Controllers\LaporanController::class, 'DinasEditLaporan'])->name('dinas.edit-laporan');
     Route::put('/edit-laporan', [App\Http\Controllers\LaporanController::class, 'DinasUpdateLaporan'])->name('dinas.update-laporan');

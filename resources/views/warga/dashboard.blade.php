@@ -1,36 +1,15 @@
 @extends('layouts.app')
 @section('title')
-Dashboard
+    Dashboard
 @endsection
 
 @section('content')
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Home /</span> Dashboard</h4>
-    <div class="card mb-3">
-        <h5 class="card-header">Daftar pelapor terbanyak</h5>
 
-        <div class="table-responsive text-nowrap">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>Dinas Terdaftar</th>
-                </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                @if(count($users) == 0)
-                    <td colspan="2">Belum ada data</td>
-                @else
-                    @foreach($users as $user)
-                        <tr>
-                            <td>{{$user->name}}</td>
-                            <td>{{$user->dinas->nama}}</td>
-                        </tr>
-                    @endforeach
-                @endif
-                </tbody>
-            </table>
-        </div>
+    <div class="card mb-3">
+        <h5 class="card-header">Jumlah laporan bulan ini: </h5>
     </div>
+
     <div class="card">
         <h5 class="card-header">Daftar Laporan</h5>
         <div class="row mx-3">
@@ -66,25 +45,22 @@ Dashboard
                     <tr>
                         <td>{{$laporan->subject}}</td>
                         @php
-                        $statusArr = ['Antri', 'Dikerjakan', 'Selesai', 'Tidak terselesaikan'];
-                        if($laporan->status == 'Antri'){
-                            $status = 'badge bg-warning';
-                        }else if($laporan->status == 'Dikerjakan'){
-                            $status = 'badge bg-info';
-                        }else if($laporan->status == 'Selesai'){
-                            $status = 'badge bg-success';
-                        }else{
-                            $status = 'badge bg-danger';
-                        }
+                            $statusArr = ['Antri', 'Dikerjakan', 'Selesai', 'Tidak terselesaikan'];
+                            if($laporan->status == 'Antri'){
+                                $status = 'badge bg-warning';
+                            }else if($laporan->status == 'Dikerjakan'){
+                                $status = 'badge bg-info';
+                            }else if($laporan->status == 'Selesai'){
+                                $status = 'badge bg-success';
+                            }else{
+                                $status = 'badge bg-danger';
+                            }
                         @endphp
                         <td><span class="{{$status}}">{{$laporan->status}}</span></td>
                         <td>{{$laporan->fasum_count}}</td>
                         <td>{{$laporan->created_at}}</td>
                         <td>{{$laporan->updated_by->name}}</td>
                         <td>
-                            <button type="button" class="btn btn-icon btn-warning" onclick="window.location.href='{{ route('dinas.edit-laporan', $laporan->id) }}'">
-                                <span class="bx bx-edit-alt me-1"></span>
-                            </button>
                             <button type="button" class="btn btn-icon btn-danger">
                                 <span class="bx bx-trash me-1"></span>
                             </button>
@@ -101,4 +77,3 @@ Dashboard
 
     <script src="{{asset('assets/vendor/js/bootstrap.js')}}"></script>
 @endsection
-

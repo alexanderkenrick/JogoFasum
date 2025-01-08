@@ -15,12 +15,36 @@ class LaporanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $sessionReports = Session::get('laporan_cart', []);
-        $laporan = Laporan::where('created_by', Auth::id())->latest()->first();
+        $users = User::withCount('laporan')
+            ->having('laporan_count', '>', 0)
+            ->orderBy('laporan_count', 'desc')
+            ->limit(5)
+            ->get();
 
-        return view('laporan.index', compact('laporan', 'sessionReports'));
+        $query = Laporan::withCount('fasum')
+            ->where('dinas_id', Auth::user()->dinas_id);
+
+        if ($request->has('filter')) {
+            $days = (int) $request->input('filter');
+            $dateFrom = Carbon::now()->subDays($days);
+            $query->where('created_at', '>=', $dateFrom);
+            $query->whereIn('status', ['Antri', 'Dikerjakan']);
+        }
+
+        $laporans = $query->orderBy('created_at', 'desc')
+            ->paginate(5);
+        return view('dinas.dashboard', compact('laporans', 'users'));
+    }
+
+    public function indexWarga()
+    {
+        $laporans = Laporan::withCount('fasum')
+            ->where('dinas_id', Auth::user()->dinas_id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+        return view('dinas.dashboard', compact('laporans'));
     }
 
     /**
