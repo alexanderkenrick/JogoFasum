@@ -108,7 +108,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="kota" class="form-label">Kota Domisili</label>
+                    <label for="dinas_id" class="form-label">Kota Domisili</label>
                     {{-- <input type="text"
                            class="form-control @error('kota') is-invalid @enderror"
                            id="kota"
@@ -123,7 +123,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                     @enderror --}}
-                    <select name="kota" id="kota" class="form-control @error('dinas_id') is-invalid @enderror" required>
+                    <select name="dinas_id" id="dinas_id" class="form-control @error('dinas_id') is-invalid @enderror" required>
                         <option value="">Pilih Kota Domisili</option>
                         @foreach ($kotas as $kota)
                             <option value="{{ $kota->id }}" {{ old('$kota') == $kota->id ? 'selected' : '' }}>
@@ -131,7 +131,7 @@
                             </option>
                         @endforeach
                     </select>
-                    @error('kota')
+                    @error('dinas_id')
                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

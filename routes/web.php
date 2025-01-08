@@ -26,7 +26,7 @@ Route::middleware(['auth'])->group(function (){
     Route::post('/kategori', [\App\Http\Controllers\KategoriController::class, 'store'])->name('kategori.store');
 });
 
-Route::prefix('dinas')->middleware(['auth', 'role:wargr'])->group(function (){
+Route::prefix('dinas')->middleware(['auth', 'role:dinas'])->group(function (){
     Route::get('/', [App\Http\Controllers\LaporanController::class, 'index'])->name('dinas.dashboard');
     Route::get('/buat-user', [App\Http\Controllers\DinasController::class, 'showCreateUser'])->name('dinas.show-create-user');
     Route::post('/buat-user', [App\Http\Controllers\DinasController::class, 'createUser'])->name('dinas.create-user');
@@ -36,6 +36,12 @@ Route::prefix('dinas')->middleware(['auth', 'role:wargr'])->group(function (){
     Route::get('/fasum', [App\Http\Controllers\FasumController::class, 'indexDinas'])->name('dinas.index-fasum');
     Route::get('/fasum/create', [App\Http\Controllers\FasumController::class, 'createDinas'])->name('dinas.create-fasum');
     Route::post('/fasum/store', [App\Http\Controllers\FasumController::class, 'storeDinas'])->name('dinas.store-fasum');
+
+    
+});
+
+Route::prefix('warga')->middleware(['auth', 'role:warga'])->group(function (){
+    Route::get('/', [App\Http\Controllers\LaporanController::class, 'index'])->name('warga.dashboard');
 });
 
 // Route::resource('homes', HomeController::class);
