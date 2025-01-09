@@ -24,21 +24,12 @@
                         <thead>
                         <tr>
                             <th>Nama</th>
-                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
                         @foreach($kategoris as $kategori)
                             <tr>
                                 <td>{{$kategori->nama}}</td>
-                                <td>
-                                    <button type="button" class="btn btn-icon btn-warning">
-                                        <span class="bx bx-edit-alt me-1"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-icon btn-danger">
-                                        <span class="bx bx-trash me-1"></span>
-                                    </button>
-                                </td>
                             </tr>
                         @endforeach
                         </tbody>
