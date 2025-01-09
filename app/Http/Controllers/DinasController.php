@@ -22,7 +22,6 @@ class DinasController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string',
             'dinas' => 'required|exists:dinas,id',
-            'role' => 'required|in:dinas,admin',
         ]);
 
         $dinas = Dinas::find($request->dinas);
