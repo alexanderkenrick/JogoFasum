@@ -209,10 +209,14 @@ class LaporanController extends Controller
                 $image->move('laporan', $imageNewName);
 
                 $laporan = Laporan::find($request->laporan_id);
+                $laporan->updated_by = Auth::id();
+                $laporan->save();
                 $laporan->fasum()->updateExistingPivot($request->fasum_id, ['image_selesai' => $imageNewName, 'status' => 'Selesai']);
             }
             else { //this is 'tidak terselesaikan' case
                 $laporan = Laporan::find($request->laporan_id);
+                $laporan->updated_by = Auth::id();
+                $laporan->save();
                 $laporan->fasum()->updateExistingPivot($request->fasum_id, ['keterangan_dinas' => $request->keterangan_dinas]);
             }
             $returnObj = ['status' => 'success', 'message' => "Laporan berhasil diubah"];
@@ -228,6 +232,9 @@ class LaporanController extends Controller
     public function DinasUpdateFasum(Request $request)
     {
         $laporan = Laporan::find($request->laporan_id);
+        $laporan->updated_by = Auth::id();
+        $laporan->save();
+
         $laporan->fasum()->updateExistingPivot($request->fasum_id, ['status' => $request->status]);
 
         return response()->json(["message" => "Update status berhasil"], 200);
