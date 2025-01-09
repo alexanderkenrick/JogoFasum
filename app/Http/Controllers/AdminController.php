@@ -9,7 +9,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $users = User::with('dinas')->where('role', 'dinas')->orderBy('dinas_id')->paginate(1);
+        $users = User::with('dinas')->where('role', 'dinas')->orderBy('dinas_id')->paginate(3);
         return view('dinas.listAdmin', compact('users'));
     }
 }

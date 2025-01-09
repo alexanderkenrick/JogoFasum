@@ -25,9 +25,13 @@
                                 <button type="button" class="btn btn-icon btn-warning" onclick="window.location.href='{{ route('dinas.show-detal-admin', ['id'=>$user->id]) }}'">
                                     <span class="bx bx-edit-alt me-1"></span>
                                 </button>
-                                <button type="button" class="btn btn-icon btn-danger" onclick="window.location.href='{{route('dinas.delete-user-admin', ['id'=>$user->id]) }}">
-                                    <span class="bx bx-trash me-1"></span>
-                                </button>
+                                <form method="POST" action="{{route('dinas.delete-user-admin', ['id'=>$user->id]) }}">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-icon btn-danger">
+                                        <span class="bx bx-trash me-1"></span>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

@@ -21,7 +21,6 @@ Fasum
                     <th>Nama</th>
                     <th>Kategori</th>
                     <th>Dinas</th>
-                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -35,11 +34,6 @@ Fasum
                             @endforeach
                         </td>
                         <td>{{$fasum->dinas->nama}}</td>
-                        <td>
-                            <button type="button" class="btn btn-icon btn-warning">
-                                <span class="bx bx-edit-alt me-1"></span>
-                            </button>
-                        </td>
                     </tr>
                 @endforeach
                 </tbody>
