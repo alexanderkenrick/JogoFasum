@@ -30,6 +30,7 @@ class KategoriSeeder extends Seeder
             ['nama' => 'Tempat Ibadah'],
             ['nama' => 'Jembatan'],
             ['nama' => 'Sungai'],
+            ['nama' => 'Jalan']
         ];
 
         DB::table($table)->insert($data);

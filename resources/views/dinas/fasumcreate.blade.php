@@ -29,7 +29,7 @@ Buat Fasum
                 </div>
 
                 <div class="mb-3">
-                    <label for="categories" class="form-label">Kategori</label>
+                    <label for="categories" class="form-label">Kategori <sub>(CTRL + click pada kategori)</sub></label>
                     <select multiple class="form-select" id="kategori" aria-label="kategori" name="categories[]">
                         @foreach($kategories as $kategori)
                             <option value="{{$kategori->id}}">{{$kategori->nama}}</option>
@@ -43,7 +43,7 @@ Buat Fasum
                 </div>
 
                 <div class="mb-3">
-                    <label for="luas" class="form-label">Luas</label>
+                    <label for="luas" class="form-label">Luas (M <sup>2</sup>)</label>
                     <input type="number" class="form-control @error('luas') is-invalid @enderror" id="luas" name="luas" step="0.01" required>
                     @error('luas')
                     <span class="invalid-feedback" role="alert">
