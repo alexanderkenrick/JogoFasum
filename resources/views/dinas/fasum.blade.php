@@ -39,9 +39,6 @@ Fasum
                             <button type="button" class="btn btn-icon btn-warning">
                                 <span class="bx bx-edit-alt me-1"></span>
                             </button>
-                            <button type="button" class="btn btn-icon btn-danger">
-                                <span class="bx bx-trash me-1"></span>
-                            </button>
                         </td>
                     </tr>
                 @endforeach
