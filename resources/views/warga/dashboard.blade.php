@@ -36,7 +36,6 @@
                     <th>Jumlah Fasum</th>
                     <th>Tanggal Dibuat</th>
                     <th>Diupdate oleh</th>
-                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
@@ -58,11 +57,6 @@
                         <td>{{$laporan->fasum_count}}</td>
                         <td>{{$laporan->created_at}}</td>
                         <td>{{$laporan->update_by ? $laporan->update_by->name : '-'}}</td>
-                        <td>
-                            <button type="button" class="btn btn-icon btn-danger">
-                                <span class="bx bx-trash me-1"></span>
-                            </button>
-                        </td>
                     </tr>
                 @endforeach
                 </tbody>
