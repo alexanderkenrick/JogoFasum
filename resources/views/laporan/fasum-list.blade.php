@@ -20,7 +20,7 @@ Buat Laporan
             @else
                 <div class="col-md-4">
                     <div class="card mb-3">
-                        <img src="{{ asset('/laporan/'.$fasum->image_path) }}" class="card-img-top" alt="{{ $fasum->nama }}">
+                        <img src="{{ asset('/fasum/'.$fasum->image_path) }}" class="card-img-top" alt="{{ $fasum->nama }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ $fasum->nama }}</h5>
                             <form action="{{ route('laporan.addToSession', $fasum->id) }}" method="POST">
