@@ -154,7 +154,42 @@ class LaporanController extends Controller
         $laporans = Laporan::with('fasum')
             ->with('create_by')
             ->where('id', $id)->first();
-        // dd($laporans);
+
+        $allFasumsAntri = $laporans->fasum()->get()->every(function ($fasum) {
+            return $fasum->pivot->status === 'Antri';
+        });
+
+        $allFasumsCompleted = $laporans->fasum()->get()->every(function ($fasum) {
+            return in_array($fasum->pivot->status, ['Selesai', 'Tidak terselesaikan']);
+        });
+
+        $hasDikerjakan = $laporans->fasum()->wherePivot('status', 'Dikerjakan')
+            ->orWherePivot('status','Outsource')->exists();
+
+        if($allFasumsAntri){
+            $laporans->status = 'Antri';
+            $laporans->save();
+        }else if($hasDikerjakan){
+            $laporans->status = 'Dikerjakan';
+            $laporans->save();
+        }else if($allFasumsCompleted){
+            $countSelesai = $laporans->fasum()
+                ->wherePivot('status', 'Selesai')
+                ->count();
+
+            $countTidakTerselesaikan = $laporans->fasum()
+                ->wherePivot('status', 'Tidak terselesaikan')
+                ->count();
+
+            if($countSelesai >= $countTidakTerselesaikan){
+                $laporans->status = 'Selesai';
+                $laporans->save();
+            }else if($countSelesai <= $countTidakTerselesaikan){
+                $laporans->status = 'Tidak terselesaikan';
+                $laporans->save();
+            }
+        }
+
         return view("dinas.edit-laporan", compact('laporans'));
     }
 
@@ -194,6 +229,7 @@ class LaporanController extends Controller
     {
         $laporan = Laporan::find($request->laporan_id);
         $laporan->fasum()->updateExistingPivot($request->fasum_id, ['status' => $request->status]);
+
         return response()->json(["message" => "Update status berhasil"], 200);
     }
 

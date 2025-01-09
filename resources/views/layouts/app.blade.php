@@ -249,6 +249,17 @@
                         </ul>
                     </li>
                 @endif
+                <!-- Log Out -->
+                <li class="menu-item">
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault(); document.getElementById('logout-form-2').submit();">
+                        <i class="bx bx-log-out"></i>
+                        <span class="align-middle">Log Out</span>
+                    </a>
+                    <form id="logout-form-2" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </li>
             </ul>
         </aside>
         <!-- / Menu -->

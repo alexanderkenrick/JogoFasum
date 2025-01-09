@@ -127,7 +127,7 @@
                         <option value="" >Pilih Kota Domisili</option>
                         @foreach ($kotas as $kota)
                             <option value="{{ $kota->id }}" {{ old('$kota') == $kota->id ? 'selected' : '' }}>
-                                {{ $kota->nama }}
+                                {{ str_replace('Dinas ', '', $kota->nama) }}
                             </option>
                         @endforeach
                     </select>
